@@ -1,4 +1,3 @@
-
 const Query = {
     user: (_, args, context, info) => {
         return context.prisma.query.user(

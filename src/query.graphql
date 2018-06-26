@@ -1,0 +1,2 @@
+# import Query.* from "user/user.query.graphql"
+# import Query.* from "post/post.query.graphql"

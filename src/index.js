@@ -1,16 +1,13 @@
 const { GraphQLServer } = require('graphql-yoga')
 const { Prisma } = require('prisma-binding')
-const _ = require('lodash');
+const a = require('graphql-import')
 
-const user = require('./user');
-const post = require('./post');
-
-console.log('post', post)
-console.log(_.merge(post, user))
+const typeDefs = a.importSchema('src/schema.graphql')
+const resolvers = require('./resolvers');
 
 const server = new GraphQLServer({
-  typeDefs: 'src/schema.graphql',
-  resolvers: _.merge(post, user),
+  typeDefs,
+  resolvers,
   context: req => ({
     ...req,
     prisma: new Prisma({

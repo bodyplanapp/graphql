@@ -1,0 +1,5 @@
+# import User from './../generated/prisma.graphql'
+
+type Mutation {
+  signup(name: String!): User!
+}

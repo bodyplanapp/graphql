@@ -1,0 +1,2 @@
+# import Mutation.* from "post/post.mutation.graphql"
+# import Mutation.* from "user/user.mutation.graphql"

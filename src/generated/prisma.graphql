@@ -1,5 +1,9 @@
 # source: https://eu1.prisma.sh/bodyplanapp-80c167/hello-world/dev
-# timestamp: Mon Jun 25 2018 16:29:00 GMT+0200 (Hora de verano romance)
+# timestamp: Tue Jun 26 2018 13:26:58 GMT+0200 (Hora de verano romance)
+
+type AggregateCustomer {
+  count: Int!
+}
 
 type AggregatePost {
   count: Int!
@@ -14,6 +18,188 @@ type BatchPayload {
   count: Long!
 }
 
+type Customer implements Node {
+  id: ID!
+  name: String!
+}
+
+"""A connection to a list of items."""
+type CustomerConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CustomerEdge]!
+  aggregate: AggregateCustomer!
+}
+
+input CustomerCreateInput {
+  name: String!
+}
+
+"""An edge in a connection."""
+type CustomerEdge {
+  """The item at the end of the edge."""
+  node: Customer!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum CustomerOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type CustomerPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type CustomerSubscriptionPayload {
+  mutation: MutationType!
+  node: Customer
+  updatedFields: [String!]
+  previousValues: CustomerPreviousValues
+}
+
+input CustomerSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CustomerSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CustomerSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CustomerSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: CustomerWhereInput
+}
+
+input CustomerUpdateInput {
+  name: String
+}
+
+input CustomerWhereInput {
+  """Logical AND on all given filters."""
+  AND: [CustomerWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [CustomerWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [CustomerWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  name: String
+
+  """All values that are not equal to given value."""
+  name_not: String
+
+  """All values that are contained in given list."""
+  name_in: [String!]
+
+  """All values that are not contained in given list."""
+  name_not_in: [String!]
+
+  """All values less than the given value."""
+  name_lt: String
+
+  """All values less than or equal the given value."""
+  name_lte: String
+
+  """All values greater than the given value."""
+  name_gt: String
+
+  """All values greater than or equal the given value."""
+  name_gte: String
+
+  """All values containing the given string."""
+  name_contains: String
+
+  """All values not containing the given string."""
+  name_not_contains: String
+
+  """All values starting with the given string."""
+  name_starts_with: String
+
+  """All values not starting with the given string."""
+  name_not_starts_with: String
+
+  """All values ending with the given string."""
+  name_ends_with: String
+
+  """All values not ending with the given string."""
+  name_not_ends_with: String
+}
+
+input CustomerWhereUniqueInput {
+  id: ID
+}
+
 """
 The `Long` scalar type represents non-fractional signed whole numeric values.
 Long can represent values between -(2^63) and 2^63 - 1.
@@ -23,16 +209,22 @@ scalar Long
 type Mutation {
   createUser(data: UserCreateInput!): User!
   createPost(data: PostCreateInput!): Post!
+  createCustomer(data: CustomerCreateInput!): Customer!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
+  updateCustomer(data: CustomerUpdateInput!, where: CustomerWhereUniqueInput!): Customer
   deleteUser(where: UserWhereUniqueInput!): User
   deletePost(where: PostWhereUniqueInput!): Post
+  deleteCustomer(where: CustomerWhereUniqueInput!): Customer
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
+  upsertCustomer(where: CustomerWhereUniqueInput!, create: CustomerCreateInput!, update: CustomerUpdateInput!): Customer!
   updateManyUsers(data: UserUpdateInput!, where: UserWhereInput): BatchPayload!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput): BatchPayload!
+  updateManyCustomers(data: CustomerUpdateInput!, where: CustomerWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyPosts(where: PostWhereInput): BatchPayload!
+  deleteManyCustomers(where: CustomerWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -344,10 +536,13 @@ input PostWhereUniqueInput {
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
+  customers(where: CustomerWhereInput, orderBy: CustomerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Customer]!
   user(where: UserWhereUniqueInput!): User
   post(where: PostWhereUniqueInput!): Post
+  customer(where: CustomerWhereUniqueInput!): Customer
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
+  customersConnection(where: CustomerWhereInput, orderBy: CustomerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CustomerConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -359,6 +554,7 @@ type Query {
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
+  customer(where: CustomerSubscriptionWhereInput): CustomerSubscriptionPayload
 }
 
 type User implements Node {
