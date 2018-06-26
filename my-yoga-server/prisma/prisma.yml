@@ -1,0 +1,6 @@
+endpoint: https://eu1.prisma.sh/bodyplanapp-80c167/hello-world/dev
+datamodel: datamodel.graphql
+# hook para actualizar la bbdd cuando se actualize el schema
+hooks:
+  post-deploy:
+    - graphql get-schema -p prisma
